@@ -307,8 +307,13 @@ def get_features(data_folder, patient_id):
 
     patient_features = np.tile(patient_features, (num_recordings, 1))
 
-    # Extract features.
-    return np.hstack((patient_features, eeg_features, ecg_features))
+    
+    try:
+        # Extract features.
+        return np.hstack((patient_features, eeg_features_list, ecg_features_list))
+
+    except Exception as e:
+        raise Exception(f"An error occurred while processing the data for patient {patient_id}. Error: {str(e)}")
 
 # Extract patient features from the data.
 def get_patient_features(data):
